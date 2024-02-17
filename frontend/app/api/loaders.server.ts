@@ -17,13 +17,29 @@ async function fetchData(url: string) {
 
 export async function getGlobalData() {
   const query = qs.stringify({
-    populate: [
-      "topNav.logoLink",
-      "topNav.navItem",
-    ],
+    populate: ["topNav.logoLink", "topNav.navItem"],
   });
 
   const url = `${baseUrl}/api/global?${query}`;
   return fetchData(url);
 }
 
+export async function getHomePageData() {
+  const query = qs.stringify({
+    populate: {
+      blocks: {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+          buttonLink: {
+            populate: true,
+          },
+        },
+      },
+    },
+  });
+
+  const url = `${baseUrl}/api/home-page?${query}`;
+  return fetchData(url);
+}
