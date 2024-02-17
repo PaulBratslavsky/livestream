@@ -4,11 +4,12 @@ export interface ElementsLink extends Schema.Component {
   collectionName: 'components_elements_links';
   info: {
     displayName: 'Link';
+    description: '';
   };
   attributes: {
     text: Attribute.String;
     href: Attribute.String;
-    isExternal: Attribute.Boolean;
+    isExternal: Attribute.Boolean & Attribute.DefaultTo<false>;
   };
 }
 

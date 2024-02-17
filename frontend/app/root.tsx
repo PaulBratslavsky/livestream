@@ -24,9 +24,7 @@ export async function loader() {
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
-  console.log(data.topNav)
- 
+  const data = useLoaderData<typeof loader>(); 
   return (
     <html lang="en">
       <head>
