@@ -21,7 +21,6 @@ export default function Index() {
   if (!data.blocks) return <p>No content found</p>;
 
   const heroData = data.blocks[0];
-  console.log(heroData);
   return (
     <div>
       <Hero data={heroData}/>

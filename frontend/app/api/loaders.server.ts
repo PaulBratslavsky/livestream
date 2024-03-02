@@ -1,3 +1,4 @@
+import { CodeSquare } from "lucide-react";
 import qs from "qs";
 import { flattenAttributes } from "~/lib/utils";
 
@@ -15,13 +16,27 @@ async function fetchData(url: string) {
   }
 }
 
+export async function getPageData(slug: string) {
+  const query = qs.stringify({
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+  });
+
+  const url = `${baseUrl}/api/pages?${query}`;
+  console.log(url); 
+  return await fetchData(url);
+}
+
 export async function getGlobalData() {
   const query = qs.stringify({
     populate: ["topNav.logoLink", "topNav.navItem"],
   });
 
   const url = `${baseUrl}/api/global?${query}`;
-  return fetchData(url);
+  return await fetchData(url);
 }
 
 export async function getHomePageData() {

@@ -25,7 +25,6 @@ export async function loader() {
 
 export default function App() {
   const data = useLoaderData<typeof loader>(); 
-  console.log(data);
   return (
     <html lang="en">
       <head>
