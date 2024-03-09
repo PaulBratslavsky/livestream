@@ -23,10 +23,18 @@ export async function getPageData(slug: string) {
         $eq: slug,
       },
     },
+    populate: {
+      blocks: {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+        },
+      },
+    },
   });
 
   const url = `${baseUrl}/api/pages?${query}`;
-  console.log(url); 
   return await fetchData(url);
 }
 

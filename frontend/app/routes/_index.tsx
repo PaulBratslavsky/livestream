@@ -5,7 +5,6 @@ import { Hero } from "~/components/custom/Hero";
 
 export async function loader() {
   const response = await getHomePageData();
-  console.dir(response, { depth: null });
   return json({...response});
 }
 

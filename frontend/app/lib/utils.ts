@@ -44,3 +44,16 @@ export function flattenAttributes(data: any): any {
 
   return flattened;
 }
+
+export function getStrapiURL() {
+  // TODO: Implement in the next stream
+  //   return ENV.STRAPI_API_URL ?? "http://localhost:1337";
+  return "http://localhost:1337";
+}
+
+export function getStrapiMedia(url: string | null) {
+  if (url == null) return null;
+  if (url.startsWith("data:")) return url;
+  if (url.startsWith("http") || url.startsWith("//")) return url;
+  return `${getStrapiURL()}${url}`;
+}

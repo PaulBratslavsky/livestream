@@ -1359,6 +1359,11 @@
   resolved "https://registry.yarnpkg.com/@vanilla-extract/private/-/private-1.0.3.tgz#7ec72bc2ff6fe51f9d650f962e8d1989b073690f"
   integrity sha512-17kVyLq3ePTKOkveHxXuIJZtGYs+cSoev7BlP+Lf4916qfDhk/HBjvlYDe8egrea7LNPHKwSZJK/bzZC+Q6AwQ==
 
+"@wavesurfer/react@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@wavesurfer/react/-/react-1.0.4.tgz#577bf84152bd25bd7ba6635a5b1694a57e6f6161"
+  integrity sha512-6WkXLhh0EaytyK1B6JqHZmzHQlBz+nbGH5x009tUH6nUIFFXq7zwkDEXqeZuWyVTKgjqcOQGOgavSZ7EbsS6lA==
+
 "@web3-storage/multipart-parser@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@web3-storage/multipart-parser/-/multipart-parser-1.0.0.tgz#6b69dc2a32a5b207ba43e556c25cc136a56659c4"
