@@ -1,15 +1,15 @@
 import { type LoaderFunctionArgs, json } from "@remix-run/node";
-import { Link } from "@remix-run/react";
 
-import { formatDate } from "~/lib/utils";
-
-import { getAllPostsData, getPageData } from "~/api/loaders.server";
 import {
   isRouteErrorResponse,
   useRouteError,
   useLoaderData,
   Scripts,
+  Link,
 } from "@remix-run/react";
+
+import { formatDate } from "~/lib/utils";
+import { getAllPostsData, getPageData } from "~/api/loaders.server";
 
 import { PageHeader } from "~/components/custom/PageHeader";
 import { FeaturedPosts } from "~/components/custom/FeaturedPosts";
