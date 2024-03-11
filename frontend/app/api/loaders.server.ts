@@ -1,4 +1,3 @@
-import { CodeSquare } from "lucide-react";
 import qs from "qs";
 import { flattenAttributes } from "~/lib/utils";
 
@@ -65,4 +64,25 @@ export async function getHomePageData() {
 
   const url = `${baseUrl}/api/home-page?${query}`;
   return fetchData(url);
+}
+
+export async function getAllMusicData() {
+  const url = new URL("/api/songs", baseUrl);
+
+  url.search = qs.stringify({
+    sort: ["createdAt:desc"],
+    populate: {
+      artist: {
+        fields: ["name"],
+      },
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+      audio: {
+        fields: ["url", "alternativeText"],
+      },
+    },
+  });
+
+  return await fetchData(url.href);
 }

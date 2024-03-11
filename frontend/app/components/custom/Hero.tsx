@@ -1,6 +1,9 @@
 import { Link } from "@remix-run/react";
 import { buttonVariants } from "~/components/ui/button";
 
+import BackgroundImage from "./BackgroundImage";
+import { Music } from "~/routes/resources.music";
+
 interface ImageProps {
   id: number;
   url: string;
@@ -23,7 +26,7 @@ interface HeroProps {
 }
 
 function ButtonLink({ data }: { readonly data: ButtonLinkProps }) {
-  const { text, isExternal, type, href } = data;
+  const { text, isExternal, href } = data;
 
   return (
     <Link
@@ -40,22 +43,18 @@ function ButtonLink({ data }: { readonly data: ButtonLinkProps }) {
 
 export function Hero({ data }: { readonly data: HeroProps }) {
   const { heading, text, image, buttonLink } = data;
-  const imageUrl = "http://localhost:1337" + image.url;
-  console.log(imageUrl);
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
-      <div className="text-center lg:text-start space-y-6">
-        <main className="text-5xl md:text-6xl font-bold">
+    <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 relative">
+      <div className="text-center lg:text-start space-y-6 z-50">
+        <div className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
-            <span className="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
+            <span className="inline bg-gradient-to-r from-[#ffa6e0]  to-[#f032d6] text-transparent bg-clip-text">
               {heading}
             </span>
           </h1>
-        </main>
+        </div>
 
-        <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
-          {text}
-        </p>
+        <p className="text-xl text-white md:w-10/12 mx-auto lg:mx-0">{text}</p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
           {buttonLink
@@ -66,10 +65,11 @@ export function Hero({ data }: { readonly data: HeroProps }) {
         </div>
       </div>
 
-      {/* Hero cards sections */}
-      <div className="z-10">
-        <img src={imageUrl} alt={image.alternativeText} />
+      <div className="z-50">
+        <Music />
       </div>
+
+      <BackgroundImage image={image} />
     </section>
   );
 }

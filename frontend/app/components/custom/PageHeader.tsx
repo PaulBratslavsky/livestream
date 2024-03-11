@@ -1,6 +1,6 @@
 import { StrapiImage } from "./StrapiImage";
 
-interface MusicHeadingProps {
+interface PageHeaderProps {
   data: {
     heading: string;
     text: string;
@@ -12,7 +12,7 @@ interface MusicHeadingProps {
   children?: React.ReactNode;
 }
 
-export function MusicHeading({ data, children }: Readonly<MusicHeadingProps>) {
+export function PageHeader({ data, children }: Readonly<MusicHeadingProps>) {
 
   const { heading, text, image } = data;
 

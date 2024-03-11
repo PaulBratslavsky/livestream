@@ -7,24 +7,64 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  isRouteErrorResponse,
+  useRouteError,
 } from "@remix-run/react";
 
 import { getGlobalData } from "~/api/loaders.server";
 
 import styles from "./tailwind.css";
-import { TopNav } from "./components/custom/TopNav";
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles },
-];
+import { RootErrorComponent } from "~/components/custom/RootErrorComponent";
+import { TopNav } from "~/components/custom/TopNav";
+
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export async function loader() {
   const globalDataResponse = await getGlobalData();
   return json(globalDataResponse);
 }
 
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <RootErrorComponent>
+        <p className="mb-4 text-4xl font-bold text-pink-600 dark:text-gray-100">
+          {error.status} {error.statusText}
+        </p>
+        <p>{error.data}</p>
+      </RootErrorComponent>
+    );
+  } else if (error instanceof Error) {
+    return (
+      <RootErrorComponent>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <p>{error.stack}</p>
+      </RootErrorComponent>
+    );
+  } else {
+    return (
+      <html lang="en">
+        <head>
+          <title>Oh no!</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <h1>Unknown Error</h1>;
+          <Scripts />
+        </body>
+      </html>
+    );
+  }
+}
+
 export default function App() {
-  const data = useLoaderData<typeof loader>(); 
+  const data = useLoaderData<typeof loader>();
+
   return (
     <html lang="en">
       <head>

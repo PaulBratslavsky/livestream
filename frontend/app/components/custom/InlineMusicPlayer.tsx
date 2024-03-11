@@ -45,6 +45,7 @@ export function InlineMusicPlayer({
 }: {
   readonly audio: AudioPlayerProps;
 }) {
+
   const containerRef = useRef(null);
   const strapiUrl = getStrapiMedia(audio.audio.url);
 
