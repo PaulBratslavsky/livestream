@@ -25,7 +25,8 @@
     "blocks": {
       "type": "dynamiczone",
       "components": [
-        "layout.hero"
+        "layout.hero",
+        "layout.post-list"
       ]
     }
   }

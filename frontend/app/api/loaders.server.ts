@@ -86,3 +86,32 @@ export async function getAllMusicData() {
 
   return await fetchData(url.href);
 }
+
+export async function getAllPostsData() {
+  const url = new URL("/api/posts", baseUrl);
+  url.search = qs.stringify({
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+    },
+  });
+  return await fetchData(url.href);
+}
+
+export async function getSinglePostsData(slug: string) {
+  const url = new URL("/api/posts", baseUrl);
+  url.search = qs.stringify({
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+    },
+  });
+  return await fetchData(url.href);
+}

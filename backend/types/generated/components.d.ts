@@ -40,6 +40,22 @@ export interface LayoutHero extends Schema.Component {
   };
 }
 
+export interface LayoutPostList extends Schema.Component {
+  collectionName: 'components_layout_post_lists';
+  info: {
+    displayName: 'Post List';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.String;
+    posts: Attribute.Relation<
+      'layout.post-list',
+      'oneToMany',
+      'api::post.post'
+    >;
+  };
+}
+
 export interface LayoutTopNav extends Schema.Component {
   collectionName: 'components_layout_top_navs';
   info: {
@@ -58,6 +74,7 @@ declare module '@strapi/types' {
       'elements.button-link': ElementsButtonLink;
       'elements.link': ElementsLink;
       'layout.hero': LayoutHero;
+      'layout.post-list': LayoutPostList;
       'layout.top-nav': LayoutTopNav;
     }
   }

@@ -66,7 +66,9 @@ export function Hero({ data }: { readonly data: HeroProps }) {
       </div>
 
       <div className="z-50">
-        <Music />
+        <div className="text-white h-[160px] overflow-scroll my-4">
+          <Music />
+        </div>
       </div>
 
       <BackgroundImage image={image} />

@@ -15,7 +15,7 @@ export function Music() {
 
   useEffect(() => {
     console.log("Music component");
-    fetcher.load("/resources/music", {});
+    fetcher.load("/resources/music");
   }, []);
 
   const isLoading =
@@ -26,11 +26,7 @@ export function Music() {
 
   const { data } = fetcher.data as any;
 
-  return (
-    <div className="text-white h-[160px] overflow-scroll">
-      {data.map((item: any) => {
-        return <InlineMusicPlayer key={item.id} audio={item} />;
-      })}
-    </div>
-  );
+  return data.map((item: any) => {
+    return <InlineMusicPlayer key={item.id} audio={item} />;
+  });
 }

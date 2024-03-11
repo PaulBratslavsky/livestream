@@ -12,7 +12,7 @@ interface PageHeaderProps {
   children?: React.ReactNode;
 }
 
-export function PageHeader({ data, children }: Readonly<MusicHeadingProps>) {
+export function PageHeader({ data, children }: Readonly<PageHeaderProps>) {
 
   const { heading, text, image } = data;
 
