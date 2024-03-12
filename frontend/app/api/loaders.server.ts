@@ -1,7 +1,8 @@
 import qs from "qs";
-import { flattenAttributes } from "~/lib/utils";
+import { flattenAttributes, getStrapiURL } from "~/lib/utils";
 
-const baseUrl = process.env.STRAPI_URL ?? "http://localhost:1337";
+const baseUrl = getStrapiURL();
+console.log("baseUrl", baseUrl);
 
 async function fetchData(url: string) {
   try {
