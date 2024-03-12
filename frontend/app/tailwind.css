@@ -164,7 +164,7 @@
 }
 
 .rich-text article  code {
-  @apply font-mono bg-gray-900 text-gray-100 rounded-lg px-2 py-1;
+  @apply font-mono bg-pink-600 text-gray-100 rounded-sm px-2 py-0.5;
 }
 
 /* Tables */
@@ -182,7 +182,7 @@
 
 /* Images */
 .rich-text article  img {
-  @apply w-full object-cover rounded-xl my-8;
+  @apply w-full object-cover rounded-xl shadow-lg my-12;
 }
 
 /* Custom containers */
@@ -190,15 +190,3 @@
   @apply bg-yellow-100 border-yellow-500 text-yellow-700 px-4 py-2 rounded-lg mb-4;
 }
 
-
-/******************************************* 
-  React Slideshow Styles
-*******************************************/   
-
-.react-slideshow-container [aria-label="Previous Slide"] {
-  margin-left: 1rem;
-}
-
-.react-slideshow-container [aria-label="Next Slide"] {
-  margin-right: 1rem;
-}

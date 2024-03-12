@@ -22,7 +22,7 @@ export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export async function loader() {
   const globalDataResponse = await getGlobalData();
-  return json(globalDataResponse);
+  return json({ globalDataResponse, ENV });
 }
 
 export function ErrorBoundary() {
@@ -63,7 +63,7 @@ export function ErrorBoundary() {
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  const { globalDataResponse, ENV} = useLoaderData<typeof loader>();
 
   return (
     <html lang="en">
@@ -74,10 +74,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <TopNav data={data.topNav} />
+        <TopNav data={globalDataResponse.topNav} />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(ENV)}`,
+          }}
+        />
         <LiveReload />
       </body>
     </html>

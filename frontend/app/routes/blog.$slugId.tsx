@@ -4,7 +4,22 @@ import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { getSinglePostsData } from "~/api/loaders.server";
 import { Markdown } from "~/components/custom/Markdown";
 
-export async function loader({ params, request }: LoaderFunctionArgs) {
+interface MetaProps {
+  data: {
+    postData: {
+      title: string;
+      description: string;
+    };
+  };
+}
+
+export function meta({ data }: MetaProps) {
+  return [
+    { title: data?.postData?.title, description: data?.postData.description },
+  ];
+}
+
+export async function loader({ params }: LoaderFunctionArgs) {
   const slugId = params.slugId;
   if (!slugId) return json({ message: "No slugId provided" }, { status: 400 });
   const postData = await getSinglePostsData(slugId);
@@ -28,5 +43,5 @@ export default function SingleBlogRoute() {
     <div className="max-w-[720px] mx-auto my-12">
       <Markdown content={content} />
     </div>
-  )
+  );
 }
