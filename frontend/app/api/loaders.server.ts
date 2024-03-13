@@ -88,6 +88,12 @@ export async function getAllMusicData() {
   return await fetchData(url.href);
 }
 
+export async function getAllLinksData() {
+  const url = new URL("/api/links", baseUrl);
+  return await fetchData(url.href);
+}
+
+
 export async function getAllPostsData() {
   const url = new URL("/api/posts", baseUrl);
   url.search = qs.stringify({
