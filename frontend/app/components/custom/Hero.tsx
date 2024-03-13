@@ -44,7 +44,8 @@ function ButtonLink({ data }: { readonly data: ButtonLinkProps }) {
 export function Hero({ data }: { readonly data: HeroProps }) {
   const { heading, text, image, buttonLink } = data;
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 relative">
+    <section className="py-20 md:py-32 relative">
+      <div className="container grid lg:grid-cols-2 place-items-center gap-10 ">
       <div className="text-center lg:text-start space-y-6 z-50">
         <div className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
@@ -71,6 +72,7 @@ export function Hero({ data }: { readonly data: HeroProps }) {
         </div>
       </div>
 
+              </div>
       <BackgroundImage image={image} />
     </section>
   );

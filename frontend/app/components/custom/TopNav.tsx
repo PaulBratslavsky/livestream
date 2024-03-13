@@ -42,7 +42,7 @@ export function TopNav({ data }: { readonly data: TopNavProps }) {
   const { logoLink, navItem } = data;
 
   return (
-    <div className="flex items-center justify-between px-4 py-2 bg-white shadow-md dark:bg-gray-800">
+    <div className="container flex items-center justify-between px-4 py-2 bg-white shadow-md dark:bg-gray-800">
       <Link className="flex items-center gap-2" to={logoLink.href}>
         <MountainIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">{logoLink.text}</span>
