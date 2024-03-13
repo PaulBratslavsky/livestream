@@ -27,6 +27,18 @@ export interface ElementsLink extends Schema.Component {
   };
 }
 
+export interface ElementsVideoClip extends Schema.Component {
+  collectionName: 'components_elements_video_clips';
+  info: {
+    displayName: 'Video Clip';
+  };
+  attributes: {
+    start: Attribute.Float;
+    end: Attribute.Float;
+    title: Attribute.String;
+  };
+}
+
 export interface LayoutHero extends Schema.Component {
   collectionName: 'components_layout_heroes';
   info: {
@@ -68,14 +80,30 @@ export interface LayoutTopNav extends Schema.Component {
   };
 }
 
+export interface LayoutVideo extends Schema.Component {
+  collectionName: 'components_layout_videos';
+  info: {
+    displayName: 'Video';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.String;
+    videoId: Attribute.String;
+    videoUrl: Attribute.String;
+    clip: Attribute.Component<'elements.video-clip', true>;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'elements.button-link': ElementsButtonLink;
       'elements.link': ElementsLink;
+      'elements.video-clip': ElementsVideoClip;
       'layout.hero': LayoutHero;
       'layout.post-list': LayoutPostList;
       'layout.top-nav': LayoutTopNav;
+      'layout.video': LayoutVideo;
     }
   }
 }

@@ -1,3 +1,4 @@
+import { tr } from "@markdoc/markdoc/dist/src/schema";
 import qs from "qs";
 import { flattenAttributes, getStrapiURL } from "~/lib/utils";
 
@@ -118,6 +119,13 @@ export async function getSinglePostsData(slug: string) {
       image: {
         fields: ["url", "alternativeText"],
       },
+      blocks: {
+        populate: {
+          clip: {
+            populate: true
+          }
+        },
+      }
     },
   });
   return await fetchData(url.href);

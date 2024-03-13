@@ -26,7 +26,8 @@
       "type": "dynamiczone",
       "components": [
         "layout.hero",
-        "layout.post-list"
+        "layout.post-list",
+        "layout.video"
       ]
     }
   }

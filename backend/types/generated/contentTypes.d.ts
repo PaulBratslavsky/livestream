@@ -920,7 +920,9 @@ export interface ApiPagePage extends Schema.CollectionType {
     title: Attribute.String;
     description: Attribute.Text;
     slug: Attribute.UID<'api::page.page', 'title'>;
-    blocks: Attribute.DynamicZone<['layout.hero', 'layout.post-list']>;
+    blocks: Attribute.DynamicZone<
+      ['layout.hero', 'layout.post-list', 'layout.video']
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -948,6 +950,7 @@ export interface ApiPostPost extends Schema.CollectionType {
     image: Attribute.Media;
     slug: Attribute.UID<'api::post.post', 'title'>;
     content: Attribute.RichText;
+    blocks: Attribute.DynamicZone<['layout.video']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -1,8 +1,3 @@
-import { useLoaderData } from "@remix-run/react";
-import { type LoaderFunctionArgs, json } from "@remix-run/node";
-
-import { getSinglePostsData } from "~/api/loaders.server";
-import { Markdown } from "~/components/custom/Markdown";
 import YouTubePlayer from "~/components/custom/YouTubePlayer/YouTubePlayer";
 
 const playlist = [
@@ -101,70 +96,10 @@ const playlist = [
   },
 ];
 
-interface MetaProps {
-  data: {
-    postData: {
-      title: string;
-      description: string;
-    };
-  };
-}
-
-export function meta({ data }: MetaProps) {
-  return [
-    { title: data?.postData?.title, description: data?.postData.description },
-  ];
-}
-
-export async function loader({ params }: LoaderFunctionArgs) {
-  const slugId = params.slugId;
-  if (!slugId) return json({ message: "No slugId provided" }, { status: 400 });
-  const postData = await getSinglePostsData(slugId);
-  return json({ postData: postData.data[0] });
-}
-
-interface PostDataProps {
-  postData: {
-    id: string;
-    title: string;
-    slug: string;
-    description: string;
-    content: string;
-    blocks: any[];
-  };
-}
-
-function blocksRenderer(block: any) {
-  switch (block.__component) {
-    case "layout.video":
-      return (
-        <YouTubePlayer
-          id={block.videoId}
-          playerKey={block.id}
-          playlist={block.clip}
-        />
-      );
-
-    default:
-      return null;
-  }
-}
-
-export default function SingleBlogRoute() {
-  const data = useLoaderData<typeof loader>() as PostDataProps;
-  console.log(data.postData.blocks, "data");
-  const blocks = data.postData?.blocks;
-  const { content } = data.postData;
+export default function SingleResourceRoute() {
   return (
-    <div>
-      <div>
-        {blocks
-          ? blocks.map((block, index) => blocksRenderer(block, index))
-          : null}
-      </div>
-      <div className="max-w-[720px] mx-auto my-12">
-        <Markdown content={content} />
-      </div>
-    </div>
+    <section className="py-6 bg-gray-800 overflow-hidden">
+      <YouTubePlayer id="aJ2pYRN8DH0" playerKey="aJ2pYRN8DH0" playlist={playlist}/>
+    </section>
   );
 }
