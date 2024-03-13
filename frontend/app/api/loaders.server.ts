@@ -1,4 +1,3 @@
-import { tr } from "@markdoc/markdoc/dist/src/schema";
 import qs from "qs";
 import { flattenAttributes, getStrapiURL } from "~/lib/utils";
 
