@@ -176,23 +176,25 @@ const YouTubePlayer = ({
     );
 
   return (
-    <div className="bg-slate-800 py-4">
-      <div className="container mx-auto grid grid-cols-7 gap-4 my-4">
-        <div className="col-span-5">
-          <div className="overflow-hidden rounded-lg" ref={playerRef} id={id} />
-          <PlayerControls
-            isPlaying={isPlaying}
-            playVideo={handlePlay}
-            pauseVideo={handleStop}
-            restartVideo={handleRestart}
-            seekForward={handleSeekForward}
-            seekBackward={handleSeekBackward}
-            playPlaylist={handlePlayPlaylist}
-            nextClip={handleNextClip}
-            prevClip={handlePrevClip}
-          />
+    <div className="bg-slate-800 md:py-4">
+      <div className="m-0 md:container mx-auto md:grid md:grid-cols-7 md:gap-4 md:my-4">
+        <div className="md:col-span-7 lg:col-span-5">
+          <div className="overflow-hidden md:rounded-lg" ref={playerRef} id={id} />
+          <div className="hidden md:block ">
+            <PlayerControls
+              isPlaying={isPlaying}
+              playVideo={handlePlay}
+              pauseVideo={handleStop}
+              restartVideo={handleRestart}
+              seekForward={handleSeekForward}
+              seekBackward={handleSeekBackward}
+              playPlaylist={handlePlayPlaylist}
+              nextClip={handleNextClip}
+              prevClip={handlePrevClip}
+            />
+          </div>
         </div>
-        <div className="col-span-2">
+        <div className="md:col-span-7 lg:col-span-2">
           <YouTubePlaylist
             player={playerInstanceRef.current}
             isPlaying={isPlaying}

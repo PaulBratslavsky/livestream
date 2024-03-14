@@ -25,7 +25,7 @@ export function YouTubePlaylist({
   playVideo,
 }: Readonly<YouTubePlaylistProps>) {
   return (
-    <section className="bg-gray-900 rounded-3xl overflow-hidden">
+    <section className="bg-gray-900 md:rounded-3xl overflow-hidden">
       <div className="flex flex-wrap -mx-4">
         <div className="w-full px-4 mb-6 lg:mb-0">
           <div className="relative px-6 pb-6 py-4">

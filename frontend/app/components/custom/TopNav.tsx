@@ -1,4 +1,8 @@
 import { Link } from "@remix-run/react";
+
+import { SheetTrigger, SheetContent, Sheet } from "~/components/ui/sheet";
+import { MenuIcon } from "lucide-react";
+
 import {
   NavigationMenuItem,
   NavigationMenuList,
@@ -24,15 +28,17 @@ interface NavItemProps {
   isEternal: boolean;
 }
 
-function NavItem({ item }: { readonly item: NavItemProps }) {
+function NavItem({
+  item,
+  className,
+}: {
+  readonly item: NavItemProps;
+  className?: string;
+}) {
   const { href, text } = item;
   return (
-    <NavigationMenuItem>
-      <Link
-        className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-        to={href}
-        prefetch="intent"
-      >
+    <NavigationMenuItem className="list-none">
+      <Link className={className} to={href} prefetch="intent">
         {text}
       </Link>
     </NavigationMenuItem>
@@ -48,18 +54,48 @@ export function TopNav({ data }: { readonly data: TopNavProps }) {
         <MountainIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">{logoLink.text}</span>
       </Link>
-      <div className="flex items-center gap-4">
+      <div className="hidden md:flex md:items-center md:gap-4 ">
         <NavigationMenu>
           <NavigationMenuList>
             {navItem
               ? navItem.map((item: NavItemProps) => (
-                  <NavItem key={item.id} item={item} />
+                  <NavItem
+                    key={item.id}
+                    item={item}
+                    className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50 "
+                  />
                 ))
               : null}
           </NavigationMenuList>
         </NavigationMenu>
         <Button>Get Started</Button>
       </div>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button className="lg:hidden" size="icon" variant="outline">
+            <MenuIcon className="h-6 w-6" />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <Link className="flex items-center gap-2" to={logoLink.href}>
+            <MountainIcon className="h-6 w-6" />
+            <span className="text-lg font-semibold">{logoLink.text}</span>
+          </Link>
+          <div className="grid gap-2 py-6">
+            {navItem
+              ? navItem.map((item: NavItemProps) => (
+                  <NavItem
+                    key={item.id}
+                    item={item}
+                    className="flex w-full items-center py-1 pl-4 rounded-sm text-lg font-semibold"
+                  />
+                ))
+              : null}
+            <Button>Get Started</Button>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
@@ -82,3 +118,98 @@ function MountainIcon(props: Readonly<React.SVGProps<SVGSVGElement>>) {
     </svg>
   );
 }
+
+/*
+
+
+
+import { Button } from "@/components/ui/button"
+import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
+import Link from "next/link"
+
+export default function Component() {
+  return (
+    <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button className="lg:hidden" size="icon" variant="outline">
+            <MenuIcon className="h-6 w-6" />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <Link href="#">
+            <MountainIcon className="h-6 w-6" />
+            <span className="sr-only">Acme Inc</span>
+          </Link>
+          <div className="grid gap-2 py-6">
+            <Link className="flex w-full items-center py-2 text-lg font-semibold" href="#">
+              Home
+            </Link>
+            <Link className="flex w-full items-center py-2 text-lg font-semibold" href="#">
+              About
+            </Link>
+            <Link className="flex w-full items-center py-2 text-lg font-semibold" href="#">
+              Services
+            </Link>
+            <Link className="flex w-full items-center py-2 text-lg font-semibold" href="#">
+              Contact
+            </Link>
+          </div>
+        </SheetContent>
+      </Sheet>
+      <Link className="mr-6 hidden lg:flex" href="#">
+        <MountainIcon className="h-6 w-6" />
+        <span className="ml-2 text-lg font-semibold">Acme Inc</span>
+      </Link>
+      <div className="ml-auto">
+        <Button>Get Started</Button>
+      </div>
+    </header>
+  )
+}
+
+function MenuIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  )
+}
+
+
+function MountainIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+    </svg>
+  )
+}
+
+
+
+*/
