@@ -103,6 +103,29 @@ export function extractYouTubeID(urlOrID: string): string | null {
   return null;
 }
 
+function timeStringToSeconds(timeString: string) {
+  // Split the time string into its components
+  const parts = timeString.split(':');
+
+  // Make sure the time string format is correct
+  if (parts.length !== 3) {
+      throw new Error('Invalid time format. Please use "HH:MM:SS".');
+  }
+
+  // Convert hours, minutes, and seconds to integers
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  const seconds = parseInt(parts[2], 10);
+
+  // Check for any NaN values
+  if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+      throw new Error('Invalid time format. Please ensure all components are numbers.');
+  }
+
+  // Convert the time to seconds
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
 const MATCH_START_QUERY = /[?&#](?:start|t)=([0-9hms]+)/
 const MATCH_END_QUERY = /[?&#]end=([0-9hms]+)/
 const MATCH_START_STAMP = /(\d+)(h|m|s)/g

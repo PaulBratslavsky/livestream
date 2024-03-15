@@ -26,3 +26,11 @@ export default function Index() {
     </div>
   );
 }
+
+export function ErrorBoundary() {
+  return (
+    <div className="bg-pink-500 text-white min-h-[calc(100vh-56px)] flex justify-center items-center">
+      <h2>Error Placeholder</h2>
+    </div>
+  );
+}

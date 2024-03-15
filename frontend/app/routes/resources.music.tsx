@@ -5,7 +5,6 @@ import { getAllMusicData } from "~/api/loaders.server";
 import { InlineMusicPlayer } from "~/components/custom/InlineMusicPlayer";
 
 export async function loader() {
-  console.log("Music loader");
   const data = await getAllMusicData();
   return json(data);
 }

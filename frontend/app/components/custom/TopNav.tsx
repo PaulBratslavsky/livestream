@@ -1,4 +1,5 @@
-import { Link } from "@remix-run/react";
+import { Link, useNavigation } from "@remix-run/react";
+import { cn } from "~/lib/utils";
 
 import { SheetTrigger, SheetContent, Sheet } from "~/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
@@ -35,10 +36,14 @@ function NavItem({
   readonly item: NavItemProps;
   className?: string;
 }) {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
+
   const { href, text } = item;
   return (
     <NavigationMenuItem className="list-none">
-      <Link className={className} to={href} prefetch="intent">
+      <Link className={cn(className, isLoading ? "animate-pulse" : "")} to={href} prefetch="intent">
         {text}
       </Link>
     </NavigationMenuItem>
