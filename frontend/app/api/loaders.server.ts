@@ -129,3 +129,29 @@ export async function getSinglePostsData(slug: string) {
   });
   return await fetchData(url.href);
 }
+
+export async function getSinglePreviewPostsData(slug: string) {
+  const url = new URL("/api/posts", baseUrl);
+  url.search = qs.stringify({
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+      blocks: {
+        populate: {
+          clip: {
+            populate: true
+          }
+        },
+      }
+    },
+    publicationState: "preview"
+  });
+  return await fetchData(url.href);
+}
+

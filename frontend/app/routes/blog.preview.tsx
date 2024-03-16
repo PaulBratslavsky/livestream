@@ -1,7 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import { type LoaderFunctionArgs, json } from "@remix-run/node";
 
-import { getSinglePostsData } from "~/api/loaders.server";
+import { getSinglePreviewPostsData } from "~/api/loaders.server";
 import { Markdown } from "~/components/custom/Markdown";
 import YouTubePlayer from "~/components/custom/YouTubePlayer/YouTubePlayer";
 
@@ -21,11 +21,13 @@ export function meta({ data }: MetaProps) {
   ];
 }
 
-export async function loader({ params }: LoaderFunctionArgs) {
-  const slugId = params;
-  // if (!slugId) return json({ message: "No slugId provided" }, { status: 400 });
-  // const postData = await getSinglePostsData(slugId);
-  return json({ postData: "test" });
+export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const slugId = url.searchParams.get("slug");
+
+  if (!slugId) return json({ message: "No slugId provided" }, { status: 400 });
+  const postData = await getSinglePreviewPostsData(slugId);
+  return json({ postData: postData.data[0] });
 }
 
 interface PostDataProps {
@@ -57,12 +59,12 @@ function blocksRenderer(block: any,) {
 }
 
 export default function SinglePreviewBlogRoute() {
-  // const data = useLoaderData<typeof loader>() as PostDataProps;
+  const data = useLoaderData<typeof loader>() as PostDataProps;
 
-  // const blocks = data.postData?.blocks;
-  // const { content } = data.postData;
+  console.log(data);
 
-  return <h1>hello</h1>
+  const blocks = data.postData?.blocks;
+  const { content } = data.postData;
 
   return (
     <div>
