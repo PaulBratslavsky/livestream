@@ -17,13 +17,15 @@ module.exports = ({ env }) => ({
       },
     },
   },
+  // update this to reflect the correct url using env variables
+
   'preview-button': {
     config: {
       contentTypes: [
         {
           uid: 'api::post.post',
           draft: {
-            url: 'http://localhost:3000/api/preview',
+            url: 'http://localhost:3000/blog/preview',
             query: {
               type: 'post',
               slug: '{slug}',

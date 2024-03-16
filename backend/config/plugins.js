@@ -5,7 +5,7 @@ module.exports = ({ env }) => ({
         {
           uid: 'api::post.post',
           draft: {
-            url: 'http://localhost:3000/api/preview',
+            url: 'http://localhost:3000/blog/preview',
             query: {
               type: 'post',
               slug: '{slug}',
