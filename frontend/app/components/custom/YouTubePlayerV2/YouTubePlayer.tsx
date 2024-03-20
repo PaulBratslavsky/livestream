@@ -8,6 +8,7 @@ export interface PlaylistItem {
   name: string;
   start: number;
   end: number;
+  title: string;
   videoUrl: string;
   videoId: string | null;
   createdAt: string;

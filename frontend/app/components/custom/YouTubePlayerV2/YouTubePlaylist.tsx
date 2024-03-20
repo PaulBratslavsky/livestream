@@ -30,9 +30,9 @@ export function YouTubePlaylist({
               <p className="text-sm text-gray-500">Description will go here.</p>
             </div>
             <div className="relative max-h-[348px] overflow-scroll">
-              <div className="absolute inset-0 h-full ml-1 w-px px-px bg-gray-300"></div>
               <div className="relative">
                 {playlist.map((clip, index) => {
+                  console.log(clip);
                   return (
                     <button
                       key={index}
@@ -42,8 +42,10 @@ export function YouTubePlaylist({
                       }}
                       className="flex items-center mb-8"
                     >
+                      <div className="absolute inset-0 h-full ml-1 w-px px-px bg-gray-300"></div>
+
                       <span
-                        className={`inline-block w-2 h-2 ml-px mr-4 rounded-full ${
+                        className={`inline-block w-2 h-2 ml-px mr-4 rounded-full z-10 ${
                           currentClipIndex === index
                             ? "bg-pink-500"
                             : "bg-gray-500"
@@ -57,7 +59,7 @@ export function YouTubePlaylist({
                               : "text-gray-200"
                           }`}
                         >
-                          Example of task change
+                          {clip.title}
                         </h2>
                         <div className="flex items-center text-xs text-gray-400">
                           <span className="mr-1">
@@ -74,12 +76,7 @@ export function YouTubePlaylist({
                               ></path>
                             </svg>
                           </span>
-                          <p>
-                            {calculateDuration(
-                              clip.start,
-                              clip.end
-                            )}
-                          </p>
+                          <p>{calculateDuration(clip.start, clip.end)}</p>
                         </div>
                       </div>
                     </button>
