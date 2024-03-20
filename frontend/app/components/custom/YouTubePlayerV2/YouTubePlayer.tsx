@@ -5,16 +5,14 @@ import YouTube from "react-youtube";
 
 export interface PlaylistItem {
   id: number;
-  attributes: {
-    name: string;
-    start: number;
-    end: number;
-    videoUrl: string;
-    videoId: string | null;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
+  name: string;
+  start: number;
+  end: number;
+  videoUrl: string;
+  videoId: string | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 export type Playlist = PlaylistItem[];
@@ -200,7 +198,7 @@ export function YouTubePlayer({
   useEffect(() => {
     let timer: any;
     if (isPlaying) {
-      player.seekTo(playlist[currentClipIndex].attributes.start);
+      player.seekTo(playlist[currentClipIndex].start);
       player.playVideo();
       timer = setTimeout(() => {
         if (currentClipIndex + 1 === playlist.length) {
@@ -208,7 +206,7 @@ export function YouTubePlayer({
           return;
         }
         setCurrentClipIndex(currentClipIndex + 1);
-      }, (playlist[currentClipIndex].attributes.end - playlist[currentClipIndex].attributes.start) * 1000);
+      }, (playlist[currentClipIndex].end - playlist[currentClipIndex].start) * 1000);
     }
     return () => clearTimeout(timer);
   }, [
@@ -253,12 +251,12 @@ export function YouTubePlayer({
   }
 
   const nextClip = () => {
-    player.seekTo(playlist[currentClipIndex + 1].attributes.start);
+    player.seekTo(playlist[currentClipIndex + 1].start);
     setCurrentClipIndex(currentClipIndex + 1);
   };
 
   const prevClip = () => {
-    player.seekTo(playlist[currentClipIndex - 1].attributes.start);
+    player.seekTo(playlist[currentClipIndex - 1].start);
     setCurrentClipIndex(currentClipIndex - 1);
   };
 
@@ -266,7 +264,11 @@ export function YouTubePlayer({
     <ClientOnly fallback={<p>loading...</p>}>
       {() => (
         <div>
-          <YouTube videoId={videoId} onReady={onReady} />
+          <YouTube 
+            videoId={videoId} 
+            onReady={onReady} 
+            iframeClassName="w-full overflow-hidden rounded-xl"
+          />
           <PlayerControls
             isPlaying={isPlaying}
             playVideo={playVideo}

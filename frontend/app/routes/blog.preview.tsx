@@ -3,7 +3,8 @@ import { type LoaderFunctionArgs, json } from "@remix-run/node";
 
 import { getSinglePreviewPostsData } from "~/api/loaders.server";
 import { Markdown } from "~/components/custom/Markdown";
-import YouTubePlayer from "~/components/custom/YouTubePlayer/YouTubePlayer";
+import { CodeEditor } from "~/components/custom/CodeEditor";
+import { PlayerAndControls } from "~/components/custom/YouTubePlayerV2/PlayerAndControls";
 
 
 interface MetaProps {
@@ -41,17 +42,18 @@ interface PostDataProps {
   };
 }
 
-function blocksRenderer(block: any,) {
+function blocksRenderer(block: any) {
   switch (block.__component) {
     case "layout.video":
       return (
-        <YouTubePlayer
-          id={block.videoId}
-          key={block.id}
-          playerKey={block.id}
+        <PlayerAndControls
+          videoId={block.videoId}
           playlist={block.clip}
         />
       );
+
+    case "layout.code":
+      return <CodeEditor data={block} />;
 
     default:
       return null;

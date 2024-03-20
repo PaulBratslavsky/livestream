@@ -20,9 +20,8 @@ export function YouTubePlaylist({
   currentClipIndex: number;
   setCurrentClipIndex: (index: number) => void;
 }) {
-  console.log(playlist, "playlist");
   return (
-    <section className="bg-gray-900 rounded-3xl overflow-hidden m-4">
+    <section className="bg-gray-900 rounded-3xl overflow-hidden">
       <div className="flex flex-wrap -mx-4">
         <div className="w-full px-4 mb-6 lg:mb-0">
           <div className="relative px-6 pb-6 py-4">
@@ -30,7 +29,7 @@ export function YouTubePlaylist({
               <h2 className="text-xl font-bold text-white">Playlist Name</h2>
               <p className="text-sm text-gray-500">Description will go here.</p>
             </div>
-            <div className="relative">
+            <div className="relative max-h-[348px] overflow-scroll">
               <div className="absolute inset-0 h-full ml-1 w-px px-px bg-gray-300"></div>
               <div className="relative">
                 {playlist.map((clip, index) => {
@@ -38,7 +37,7 @@ export function YouTubePlaylist({
                     <button
                       key={index}
                       onClick={() => {
-                        player.seekTo(clip.attributes.start);
+                        player.seekTo(clip.start);
                         setCurrentClipIndex(index);
                       }}
                       className="flex items-center mb-8"
@@ -77,8 +76,8 @@ export function YouTubePlaylist({
                           </span>
                           <p>
                             {calculateDuration(
-                              clip.attributes.start,
-                              clip.attributes.end
+                              clip.start,
+                              clip.end
                             )}
                           </p>
                         </div>
