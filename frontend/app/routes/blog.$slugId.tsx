@@ -4,6 +4,7 @@ import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { getSinglePostsData } from "~/api/loaders.server";
 import { Markdown } from "~/components/custom/Markdown";
 import YouTubePlayer from "~/components/custom/YouTubePlayer/YouTubePlayer";
+import { CodeEditor } from "~/components/custom/CodeEditor";
 
 
 interface MetaProps {
@@ -50,6 +51,9 @@ function blocksRenderer(block: any,) {
           playlist={block.clip}
         />
       );
+
+      case "layout.code":
+        return <CodeEditor data={block} />;
 
     default:
       return null;

@@ -955,7 +955,7 @@ export interface ApiPostPost extends Schema.CollectionType {
     image: Attribute.Media;
     slug: Attribute.UID<'api::post.post', 'title'>;
     content: Attribute.RichText;
-    blocks: Attribute.DynamicZone<['layout.video']>;
+    blocks: Attribute.DynamicZone<['layout.video', 'layout.code']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

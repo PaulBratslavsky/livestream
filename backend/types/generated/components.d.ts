@@ -39,6 +39,41 @@ export interface ElementsVideoClip extends Schema.Component {
   };
 }
 
+export interface LayoutCode extends Schema.Component {
+  collectionName: 'components_layout_codes';
+  info: {
+    displayName: 'Code';
+    description: '';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    code: Attribute.Text;
+    language: Attribute.Enumeration<
+      [
+        'javascript',
+        'typescript',
+        'python',
+        'go',
+        'csharp',
+        'html',
+        'css',
+        'json',
+        'markdown',
+        'sql',
+        'shell',
+        'php',
+        'plaintext',
+        'dockerfile',
+        'javascriptreact',
+        'typescriptreact',
+        'jsonc',
+        'c'
+      ]
+    >;
+  };
+}
+
 export interface LayoutHero extends Schema.Component {
   collectionName: 'components_layout_heroes';
   info: {
@@ -100,6 +135,7 @@ declare module '@strapi/types' {
       'elements.button-link': ElementsButtonLink;
       'elements.link': ElementsLink;
       'elements.video-clip': ElementsVideoClip;
+      'layout.code': LayoutCode;
       'layout.hero': LayoutHero;
       'layout.post-list': LayoutPostList;
       'layout.top-nav': LayoutTopNav;
