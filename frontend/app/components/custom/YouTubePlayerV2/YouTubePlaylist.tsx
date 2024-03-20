@@ -12,11 +12,15 @@ function calculateDuration(start: number, end: number) {
 export function YouTubePlaylist({
   player,
   playlist,
+  title,
+  description,
   currentClipIndex,
   setCurrentClipIndex,
 }: {
   player: any;
   playlist: Playlist;
+  title: string;
+  description: string;
   currentClipIndex: number;
   setCurrentClipIndex: (index: number) => void;
 }) {
@@ -26,8 +30,8 @@ export function YouTubePlaylist({
         <div className="w-full px-4 mb-6 lg:mb-0">
           <div className="relative px-6 pb-6 py-4">
             <div className="mb-6">
-              <h2 className="text-xl font-bold text-white">Playlist Name</h2>
-              <p className="text-sm text-gray-500">Description will go here.</p>
+              <h2 className="text-xl font-bold text-white">{title}</h2>
+              <p className="text-sm text-gray-500">{description}</p>
             </div>
             <div className="relative max-h-[348px] overflow-scroll">
               <div className="relative">

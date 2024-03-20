@@ -46,6 +46,8 @@ function blocksRenderer(block: any) {
         <PlayerAndControls
           videoId={block.videoId}
           playlist={block.clip}
+          title={block.title}
+          description={block.description}
         />
       );
 

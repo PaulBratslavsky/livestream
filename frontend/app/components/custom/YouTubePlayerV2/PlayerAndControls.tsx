@@ -5,11 +5,15 @@ import { YouTubePlaylist } from "~/components/custom/YouTubePlayerV2/YouTubePlay
 interface PlayerAndControlsProps {
   videoId: string;
   playlist: any[];
+  title: string;
+  description: string;
 }
 
 export function PlayerAndControls({
   videoId,
   playlist,
+  title,
+  description,
 }: PlayerAndControlsProps) {
   const [player, setPlayer] = useState<any>(null);
   const [currentClipIndex, setCurrentClipIndex] = useState(0);
@@ -34,6 +38,8 @@ export function PlayerAndControls({
           <aside className="rounded-3xl">
             <YouTubePlaylist
               playlist={playlist}
+              title={title}
+              description={description}
               player={player}
               currentClipIndex={currentClipIndex}
               setCurrentClipIndex={setCurrentClipIndex}
