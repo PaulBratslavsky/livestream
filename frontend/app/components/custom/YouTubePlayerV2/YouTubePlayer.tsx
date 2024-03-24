@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { ClientOnly } from "remix-utils/client-only";
 
 import YouTube from "react-youtube";
@@ -113,13 +113,12 @@ function Pause() {
   );
 }
 
-function Button({
-  children,
-  onClick,
-}: {
+interface ButtonProps {
   children: React.ReactNode;
   onClick: () => void;
-}) {
+}
+
+function Button({ children, onClick }: Readonly<ButtonProps>) {
   const buttonStyles =
     "text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:bg-gray-700 dark:focus:ring-gray-900 dark:text-gray-300";
   return (
@@ -129,6 +128,17 @@ function Button({
   );
 }
 
+interface PlayerControlsProps {
+  isPlaying: boolean;
+  playVideo: () => void;
+  pauseVideo: () => void;
+  restartVideo: () => void;
+  seekForward: () => void;
+  seekBackward: () => void;
+  nextClip: () => void;
+  prevClip: () => void;
+}
+
 function PlayerControls({
   isPlaying,
   playVideo,
@@ -136,20 +146,9 @@ function PlayerControls({
   restartVideo,
   seekForward,
   seekBackward,
-  playPlaylist,
   nextClip,
   prevClip,
-}: {
-  isPlaying: boolean;
-  playVideo: () => void;
-  pauseVideo: () => void;
-  restartVideo: () => void;
-  seekForward: () => void;
-  seekBackward: () => void;
-  playPlaylist: () => void;
-  nextClip: () => void;
-  prevClip: () => void;
-}) {
+}: Readonly<PlayerControlsProps>) {
   return (
     <div className="flex flex-row justify-center items-center bg-slate-900 p-4 mt-4 rounded-xl">
       <Button onClick={restartVideo}>
@@ -166,68 +165,49 @@ function PlayerControls({
         <SeekForward />
       </Button>
       <Button onClick={nextClip}>Next</Button>
-      <Button onClick={isPlaying ? pauseVideo : playPlaylist}>
-        {isPlaying ? "Stop" : "Play Playlist"}
-      </Button>
     </div>
   );
 }
 
+interface YouTubePlayerProps {
+  videoId: string;
+  timestamp: number;
+  playlist: Playlist;
+  player: any;
+  setPlayer: (player: any) => void;
+  currentClipIndex: number;
+  setCurrentClipIndex: (index: number) => void;
+}
+
 export function YouTubePlayer({
   videoId,
+  timestamp,
   playlist,
   player,
   setPlayer,
   currentClipIndex,
   setCurrentClipIndex,
-}: {
-  videoId: string;
-  playlist: Playlist;
-  player: any;
-  currentClipIndex: number;
-  setCurrentClipIndex: (index: number) => void;
-  setPlayer: (player: any) => void;
-}) {
+}: Readonly<YouTubePlayerProps>) {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const stopPlaylist = useCallback(() => {
-    player.pauseVideo();
-    setIsPlaying(false);
-    setCurrentClipIndex(0);
-  }, [player, setCurrentClipIndex]);
-
   useEffect(() => {
-    let timer: any;
-    if (isPlaying) {
-      player.seekTo(playlist[currentClipIndex].start);
-      player.playVideo();
-      timer = setTimeout(() => {
-        if (currentClipIndex + 1 === playlist.length) {
-          stopPlaylist();
-          return;
-        }
-        setCurrentClipIndex(currentClipIndex + 1);
-      }, (playlist[currentClipIndex].end - playlist[currentClipIndex].start) * 1000);
+    if (player) {
+      if (timestamp) {
+        player.seekTo(timestamp);
+        player.playVideo();
+        setIsPlaying(true);
+      }
     }
-    return () => clearTimeout(timer);
-  }, [
-    currentClipIndex,
-    isPlaying,
-    playlist,
-    player,
-    stopPlaylist,
-    setCurrentClipIndex,
-  ]);
+  }, [timestamp]);
+
 
   function onReady(event: any) {
     setPlayer(event.target);
   }
 
-  function playPlaylist() {
-    setIsPlaying(true);
-  }
-
   function playVideo() {
+    const currentTime = player.getCurrentTime();
+    player.seekTo(currentTime);
     player.playVideo();
     setIsPlaying(true);
   }
@@ -239,13 +219,14 @@ export function YouTubePlayer({
 
   function restartVideo() {
     player.seekTo(0);
-    playVideo();
+    player.playVideo();
     setIsPlaying(true);
   }
 
   function seekForward() {
     player.seekTo(player.getCurrentTime() + 5, true);
   }
+
 
   function seekBackward() {
     player.seekTo(player.getCurrentTime() - 5, true);
@@ -254,20 +235,22 @@ export function YouTubePlayer({
   const nextClip = () => {
     player.seekTo(playlist[currentClipIndex + 1].start);
     setCurrentClipIndex(currentClipIndex + 1);
+    player.playVideo();
   };
 
   const prevClip = () => {
     player.seekTo(playlist[currentClipIndex - 1].start);
     setCurrentClipIndex(currentClipIndex - 1);
+    player.playVideo();
   };
 
   return (
     <ClientOnly fallback={<p>loading...</p>}>
       {() => (
         <div>
-          <YouTube 
-            videoId={videoId} 
-            onReady={onReady} 
+          <YouTube
+            videoId={videoId}
+            onReady={onReady}
             iframeClassName="w-full overflow-hidden rounded-xl"
           />
           <PlayerControls
@@ -277,7 +260,6 @@ export function YouTubePlayer({
             restartVideo={restartVideo}
             seekForward={seekForward}
             seekBackward={seekBackward}
-            playPlaylist={playPlaylist}
             nextClip={nextClip}
             prevClip={prevClip}
           />

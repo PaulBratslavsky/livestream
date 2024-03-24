@@ -1,6 +1,6 @@
 export function YouTubePlaylistDescription() {
   return (
-    <section className="relative py-20 bg-gray-900 rounded-3xl p-20">
+    <section className="relative py-20 bg-gray-900 rounded-3xl p-20 mt-4">
       <h2 className="mb-10 text-3xl text-white ont-semibold font-heading">When I was a developer, I often had a hundred questions when</h2>
       <p className="mb-10 text-xl text-gray-400">These types of questions led me to miss numerous deadlines, and I wasted time and energy in back-and-forth communication. Sadly, this situation could have been avoided if the wireframes had provided enough detail.</p>
       <div className="h-112 mb-10">

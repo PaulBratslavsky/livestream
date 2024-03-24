@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { YouTubePlayer } from "~/components/custom/YouTubePlayerV2/YouTubePlayer";
 import { YouTubePlaylist } from "~/components/custom/YouTubePlayerV2/YouTubePlaylist";
+import { VideoTranscript } from "~/routes/resources.video-transcript.$videoId";
 
 interface PlayerAndControlsProps {
   videoId: string;
@@ -14,9 +15,10 @@ export function PlayerAndControls({
   playlist,
   title,
   description,
-}: PlayerAndControlsProps) {
+}: Readonly<PlayerAndControlsProps>) {
   const [player, setPlayer] = useState<any>(null);
   const [currentClipIndex, setCurrentClipIndex] = useState(0);
+  const [timeStamp, setTimeStamp] = useState(0);
 
   return (
     <section className="py-6 bg-gray-800 overflow-hidden">
@@ -30,6 +32,7 @@ export function PlayerAndControls({
             setPlayer={setPlayer}
             currentClipIndex={currentClipIndex}
             setCurrentClipIndex={setCurrentClipIndex}
+            timestamp={timeStamp}
           />
         </div>
 
@@ -47,6 +50,7 @@ export function PlayerAndControls({
           </aside>
         </div>
       </div>
+      <VideoTranscript videoId={videoId} title={title} setTimestamp={setTimeStamp}/>
     </section>
   );
 }

@@ -9,6 +9,15 @@ function calculateDuration(start: number, end: number) {
   return `${minutes}min ${seconds}sec`;
 }
 
+interface YouTubePlaylistProps {
+  player: any;
+  playlist: Playlist;
+  title: string;
+  description: string;
+  currentClipIndex: number;
+  setCurrentClipIndex: (index: number) => void;
+}
+
 export function YouTubePlaylist({
   player,
   playlist,
@@ -16,14 +25,7 @@ export function YouTubePlaylist({
   description,
   currentClipIndex,
   setCurrentClipIndex,
-}: {
-  player: any;
-  playlist: Playlist;
-  title: string;
-  description: string;
-  currentClipIndex: number;
-  setCurrentClipIndex: (index: number) => void;
-}) {
+}: Readonly<YouTubePlaylistProps>) {
   return (
     <section className="bg-gray-900 rounded-3xl overflow-hidden">
       <div className="flex flex-wrap -mx-4">
