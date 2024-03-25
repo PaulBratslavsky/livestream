@@ -3,7 +3,6 @@ import { flattenAttributes, getStrapiURL } from "~/lib/utils";
 import { getYTTranscript } from "~/services/get-yt-transcript.server";
 
 const baseUrl = getStrapiURL();
-console.log("baseUrl", baseUrl);
 
 async function fetchData(url: string) {
   try {

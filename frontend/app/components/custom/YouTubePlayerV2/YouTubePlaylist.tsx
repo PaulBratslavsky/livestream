@@ -38,7 +38,6 @@ export function YouTubePlaylist({
             <div className="relative max-h-[348px] overflow-scroll">
               <div className="relative">
                 {playlist.map((clip, index) => {
-                  console.log(clip);
                   return (
                     <button
                       key={index}

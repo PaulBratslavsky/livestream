@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { useFetcher } from "@remix-run/react";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useEffect } from "react";
 import { getVideoTranscript } from "~/api/loaders.server";
+import { Input } from "~/components/ui/input";
+
+function convert (seconds: number) {
+  const date = new Date(0);
+  date.setSeconds(seconds);
+  return date.toISOString().split("T")[1].split(".")[0];
+}
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const videoId = params.videoId;
@@ -11,19 +19,18 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return json({ data: transcript.data });
 }
 
-
 interface VideoTranscriptProps {
   videoId: string;
-  title: string;
+  title?: string;
   setTimestamp: (timestamp: number) => void;
 }
 
 export function VideoTranscript({
   videoId,
-  title,
   setTimestamp,
 }: Readonly<VideoTranscriptProps>) {
-  const fetcher = useFetcher();
+  const fetcher = useFetcher() as any;
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
     fetcher.load("/resources/video-transcript/" + videoId);
@@ -33,28 +40,63 @@ export function VideoTranscript({
     fetcher.state === "submitting" || fetcher.state === "loading";
 
   if (!fetcher.data) return null;
-  if (isLoading) return <div className="bg-pink-500">Loading...</div>;
+  if (isLoading) return <div className="bg-pink-500 container mx-auto">Loading...</div>;
 
-  const { data } = fetcher.data as any;
+  const data = fetcher.data.data;
 
-  if (!data) return null;
+  function handleSearchArray(query: string) {
+    const filtered = data.filter((item: any) =>
+      item.text.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }
+
+  let test = filteredData ?? data;
 
   return (
-    <section className="relative py-20 bg-gray-900 rounded-3xl p-20 m-4">
-      <h2 className="mb-10 text-3xl text-white ont-semibold font-heading">
-        {title}
-      </h2>
-      <div className="space-y-2 h-[400px] overflow-y-scroll">
-      {data.map((item: any, index: number) => (
-        <button
-          key={index}
-          className="text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 py-0.5 px-2 focus:ring-blue-600 focus:ring-opacity-50"
-          onClick={() => setTimestamp(item.offset / 1000)} // Convert milliseconds to seconds
-        >
-          {item.text}
-        </button>
-      ))}
-    </div>
+    <section className="relative py-10 bg-gray-900 rounded-3xl px-10">
+ 
+      <Search callback={handleSearchArray} />
+
+      <div className="h-[400px] overflow-y-scroll mt-5">
+        {test.map((item: any, index: number) => {
+          return (
+            <button
+              key={index}
+              className="text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 py-0.5 px-2 focus:ring-blue-600 focus:ring-opacity-50 text-sm text-left"
+              onClick={() => setTimestamp(item.offset / 1000)}
+            >
+              <span className="text-yellow-400 text-xs">{convert(item.offset / 1000)}</span> - {item.text} 
+            </button>
+          );
+        })}
+      </div>
     </section>
+  );
+}
+
+interface SearchProps {
+  callback: (query: string) => void;
+}
+
+export function Search({ callback }: Readonly<SearchProps>) {
+  const [query, setQuery] = useState("");
+
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value);
+    callback(event.target.value);
+  }
+
+  return (
+    <div>
+      <Input
+        id="query"
+        aria-label="Search contacts"
+        placeholder="Search"
+        type="search"
+        onChange={handleInputChange}
+        value={query}
+      />
+    </div>
   );
 }

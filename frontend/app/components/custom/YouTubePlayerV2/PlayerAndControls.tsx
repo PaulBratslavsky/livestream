@@ -3,6 +3,8 @@ import { YouTubePlayer } from "~/components/custom/YouTubePlayerV2/YouTubePlayer
 import { YouTubePlaylist } from "~/components/custom/YouTubePlayerV2/YouTubePlaylist";
 import { VideoTranscript } from "~/routes/resources.video-transcript.$videoId";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+
 interface PlayerAndControlsProps {
   videoId: string;
   playlist: any[];
@@ -39,18 +41,31 @@ export function PlayerAndControls({
         {/* Right column */}
         <div className="grid grid-cols-1">
           <aside className="rounded-3xl">
-            <YouTubePlaylist
-              playlist={playlist}
-              title={title}
-              description={description}
-              player={player}
-              currentClipIndex={currentClipIndex}
-              setCurrentClipIndex={setCurrentClipIndex}
-            />
+            <Tabs defaultValue="playlist" className="w-[400px]">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="playlist">Playlist</TabsTrigger>
+                <TabsTrigger value="transcript">Transcript</TabsTrigger>
+              </TabsList>
+              <TabsContent value="playlist">
+                <YouTubePlaylist
+                  playlist={playlist}
+                  title={title}
+                  description={description}
+                  player={player}
+                  currentClipIndex={currentClipIndex}
+                  setCurrentClipIndex={setCurrentClipIndex}
+                />
+              </TabsContent>
+              <TabsContent value="transcript">
+                <VideoTranscript
+                  videoId={videoId}
+                  setTimestamp={setTimeStamp}
+                />
+              </TabsContent>
+            </Tabs>
           </aside>
         </div>
       </div>
-      <VideoTranscript videoId={videoId} title={title} setTimestamp={setTimeStamp}/>
     </section>
   );
 }

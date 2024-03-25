@@ -49,6 +49,8 @@ function blocksRenderer(block: any) {
         <PlayerAndControls
           videoId={block.videoId}
           playlist={block.clip}
+          title={block.title}
+          description={block.description}
         />
       );
 
@@ -62,9 +64,6 @@ function blocksRenderer(block: any) {
 
 export default function SinglePreviewBlogRoute() {
   const data = useLoaderData<typeof loader>() as PostDataProps;
-
-  console.log(data);
-
   const blocks = data.postData?.blocks;
   const { content } = data.postData;
 
